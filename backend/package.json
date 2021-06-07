@@ -1,0 +1,33 @@
+{
+  "name": "supermarket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "debug": "nodemon --inspect index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thiagoabad/supermarket.git"
+  },
+  "author": "Thiago Abad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thiagoabad/supermarket/issues"
+  },
+  "homepage": "https://github.com/thiagoabad/supermarket#readme",
+  "dependencies": {
+    "consign": "^0.1.6",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "mysql": "^2.17.1",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
