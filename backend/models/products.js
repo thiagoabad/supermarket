@@ -7,7 +7,7 @@ const Products = sequelize.define('Products', {
     allowNull: false
   },
   price: {
-    type: DataTypes.FLOAT
+    type: DataTypes.REAL
   }
 }, {
   schema: 'supermarket',
