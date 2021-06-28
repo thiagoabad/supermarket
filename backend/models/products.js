@@ -14,4 +14,4 @@ const Products = sequelize.define('Products', {
   tableName: 'products'
 });
 
-module.Products = Products;
+module.exports = Products;

@@ -1,41 +1,84 @@
-//const Products = require('../models/products');
+const Products = require('../models/products');
 const utils = require('../helpers/utils');
-const sequelize = require('../db/connection');
+const logger = require('../config/winston');
 
 module.exports = app => {
-    app.get('/products', (req, res) => {
-        //Atendimento.lista(res)
+    app.get('/products', async (req, res) => {
+        const products = await Products.findAll();
+        console.log("products: ", products);
+        logger.info('teste');
+        res.send(products);
     })
 
-    app.get('/products/:id', (req, res) => {
-        const id = parseInt(req.params.id)
-
-        //Atendimento.buscaPorId(id, res)
+    app.get('/products/:id', async (req, res) => {
+        const id = req.params.id
+        try {
+            const products = await Products.findAll({
+                where: {
+                  id
+                }
+              });
+            if (products.length === 0){
+                res.status(404);
+                res.send({message: 'Not Found'});
+            } else {
+                console.log("products: ", products);
+                res.send(products);
+            }
+        }
+        catch (e) {
+            console.log(e);
+            res.status(500);
+            res.send({'error': e});
+        }
     })
 
     app.post('/products', async (req, res) => {
         const product = req.body;
         try {
-            const createdProduct = await sequelize.models.Products.create({ id: utils.uuidv4(), name: product.name, price: product.price });
+            const createdProduct = await Products.create({ id: utils.uuidv4(), name: product.name, price: product.price });
             console.log("createdProduct: ", createdProduct);
+            res.status(201);
             res.send(createdProduct);
         }
         catch (e) {
             console.log(e);
+            res.status(500);
             res.send({'error': e});
         }
     }) 
 
-    app.put('/products/:id', (req, res) => {
-        const id = parseInt(req.params.id)
-        const valores = req.body
-
-        //Atendimento.altera(id, valores, res)
+    app.put('/products/:id', async (req, res) => {
+        const id = req.params.id
+        const values = req.body
+        try{
+            await Products.update(values, {
+                where: {
+                  id
+                }
+            });
+            res.send({'status': 'ok'});
+        }
+        catch (e){
+            console.log(e);
+            res.status(500);
+            res.send({'error': e});
+        }
     })
 
-    app.delete('/products/:id', (req, res) => {
-        const id = parseInt(req.params.id)
-
-        //Atendimento.deleta(id, res)
+    app.delete('/products/:id', async (req, res) => {
+        const id = req.params.id
+        try {
+            await Products.destroy({
+                where: {
+                  id: id
+                }
+              });
+            res.send({'status': 'ok'});
+        } catch (e) {
+            console.log(e);
+            res.status(500);
+            res.send({'error': e}); 
+        }
     })
 }
