@@ -5,8 +5,7 @@ const logger = require('../config/winston');
 module.exports = app => {
     app.get('/products', async (req, res) => {
         const products = await Products.findAll();
-        console.log("products: ", products);
-        logger.info('teste');
+        logger.info("products: ", products);
         res.send(products);
     })
 
@@ -22,12 +21,12 @@ module.exports = app => {
                 res.status(404);
                 res.send({message: 'Not Found'});
             } else {
-                console.log("products: ", products);
+                logger.info("products: ", products);
                 res.send(products);
             }
         }
         catch (e) {
-            console.log(e);
+            logger.error(e);
             res.status(500);
             res.send({'error': e});
         }
@@ -37,12 +36,12 @@ module.exports = app => {
         const product = req.body;
         try {
             const createdProduct = await Products.create({ id: utils.uuidv4(), name: product.name, price: product.price });
-            console.log("createdProduct: ", createdProduct);
+            logger.info("createdProduct: ", createdProduct);
             res.status(201);
             res.send(createdProduct);
         }
         catch (e) {
-            console.log(e);
+            logger.error(e);
             res.status(500);
             res.send({'error': e});
         }
@@ -60,7 +59,7 @@ module.exports = app => {
             res.send({'status': 'ok'});
         }
         catch (e){
-            console.log(e);
+            logger.error(e);
             res.status(500);
             res.send({'error': e});
         }
@@ -76,7 +75,7 @@ module.exports = app => {
               });
             res.send({'status': 'ok'});
         } catch (e) {
-            console.log(e);
+            logger.error(e);
             res.status(500);
             res.send({'error': e}); 
         }
