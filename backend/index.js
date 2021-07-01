@@ -2,7 +2,6 @@ const customExpress = require('./config/customExpress');
 const connection = require('./db/connection');
 const logger = require('./config/winston');
 const Umzug = require('umzug');
-const { Sequelize } = require('sequelize');
 
 connection.authenticate()
 .then(() => {
