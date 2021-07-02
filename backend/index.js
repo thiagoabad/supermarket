@@ -3,6 +3,8 @@ const connection = require('./db/connection');
 const logger = require('./config/winston');
 const Umzug = require('umzug');
 
+let app;
+
 connection.authenticate()
 .then(() => {
     logger.info('Connection has been established successfully.');
@@ -26,9 +28,11 @@ connection.authenticate()
         logger.info('All migrations performed successfully')
       })();
 
-    const app = customExpress();
+    app = customExpress();
     app.listen(3000, () => logger.info('Server running on port 3000'));
 })
 .catch((error) => {
     logger.error('Unable to connect to the database:', error);
 });
+
+module.exports = app;

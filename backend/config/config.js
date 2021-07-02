@@ -14,7 +14,7 @@ function Config(){
         
         default:
             return { 
-                DB_HOST: '',
+                DB_HOST: '192.9.200.99',
                 DB_PORT: 15432
             };
     }

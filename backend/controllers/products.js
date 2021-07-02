@@ -3,13 +3,13 @@ const utils = require('../helpers/utils');
 const logger = require('../config/winston');
 
 module.exports = app => {
-    app.get('/products', async (req, res) => {
+    app.get('/product', async (req, res) => {
         const products = await Products.findAll();
-        logger.info("products: ", products);
+        logger.info("GET /product");
         res.send(products);
     })
 
-    app.get('/products/:id', async (req, res) => {
+    app.get('/product/:id', async (req, res) => {
         const id = req.params.id
         try {
             const products = await Products.findAll({
@@ -21,7 +21,7 @@ module.exports = app => {
                 res.status(404);
                 res.send({message: 'Not Found'});
             } else {
-                logger.info("products: ", products);
+                logger.info("GET /product/:id");
                 res.send(products);
             }
         }
@@ -32,11 +32,11 @@ module.exports = app => {
         }
     })
 
-    app.post('/products', async (req, res) => {
+    app.post('/product', async (req, res) => {
         const product = req.body;
         try {
             const createdProduct = await Products.create({ id: utils.uuidv4(), name: product.name, price: product.price });
-            logger.info("createdProduct: ", createdProduct);
+            logger.info("POST /product");
             res.status(201);
             res.send(createdProduct);
         }
@@ -47,10 +47,11 @@ module.exports = app => {
         }
     }) 
 
-    app.put('/products/:id', async (req, res) => {
+    app.put('/product/:id', async (req, res) => {
         const id = req.params.id
         const values = req.body
         try{
+            logger.info("PUT /product/:id");
             await Products.update(values, {
                 where: {
                   id
@@ -65,9 +66,10 @@ module.exports = app => {
         }
     })
 
-    app.delete('/products/:id', async (req, res) => {
+    app.delete('/product/:id', async (req, res) => {
         const id = req.params.id
         try {
+            logger.info("DELETE /product/:id");
             await Products.destroy({
                 where: {
                   id: id
