@@ -3,8 +3,6 @@ const connection = require('./db/connection');
 const logger = require('./config/winston');
 const Umzug = require('umzug');
 
-let app;
-
 connection.authenticate()
 .then(() => {
     logger.info('Connection has been established successfully.');
@@ -34,5 +32,3 @@ connection.authenticate()
 .catch((error) => {
     logger.error('Unable to connect to the database:', error);
 });
-
-module.exports = app;
